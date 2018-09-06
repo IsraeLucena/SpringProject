@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.card.dto.CreateCategoriaDTO;
+import br.com.card.model.Cartao;
+import br.com.card.model.Categoria;
 import br.com.card.repository.CategoriaRepository;
 import br.com.card.service.CategoriaService;
 
@@ -19,7 +21,7 @@ import br.com.card.service.CategoriaService;
 public class CategoriaResource {
 	
 	@Autowired
-	private CategoriaRepository caegoriaRepository;
+	private CategoriaRepository categoriaRepository;
 	
 	@Autowired
 	private CategoriaService categoriaService;
@@ -29,7 +31,7 @@ public class CategoriaResource {
 			method = RequestMethod.GET)
 	@Transactional
 	public ResponseEntity<?> listAll() {
-		return ResponseEntity.ok(caegoriaRepository.findAll());
+		return ResponseEntity.ok(categoriaRepository.findAll());
 	}
 	
 	@RequestMapping(value = "/find-by-id", 
@@ -37,7 +39,7 @@ public class CategoriaResource {
 			method = RequestMethod.GET)
 	@Transactional
 	public ResponseEntity<?> listById(@RequestParam(value = "idCategoria", required = true) Long idCategoria) {
-		return ResponseEntity.ok(caegoriaRepository.findOne(idCategoria));
+		return ResponseEntity.ok(categoriaRepository.findOne(idCategoria));
 	}
 	
 	@RequestMapping(value = "/create", 
@@ -45,6 +47,22 @@ public class CategoriaResource {
 			method = RequestMethod.POST)
 	public ResponseEntity<?> create(@RequestBody CreateCategoriaDTO dto) {
 		return ResponseEntity.ok(categoriaService.create(dto));
+	}
+	
+	@RequestMapping(value = "/delete", 
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.DELETE)
+	@Transactional
+	public ResponseEntity<?> delete(@RequestParam(value = "idCartao", required = true) Long idCategoria) {
+		categoriaRepository.delete(idCategoria);
+		return ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(value = "/update", 
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.PUT)
+	public ResponseEntity<?> update(@RequestBody Categoria categoria) {
+		return ResponseEntity.ok(categoriaService.update(categoria));
 	}
 
 }

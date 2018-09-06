@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.card.dto.CreateUsuarioDTO;
+import br.com.card.model.Cartao;
 import br.com.card.model.Usuario;
 import br.com.card.repository.UsuarioRepository;
 import br.com.card.service.UsuarioService;
@@ -47,6 +48,22 @@ public class UsuarioResource {
 			method = RequestMethod.POST)
 	public ResponseEntity<?> create(@RequestBody CreateUsuarioDTO dto) {
 		return ResponseEntity.ok(usuarioService.create(dto));
+	}
+	
+	@RequestMapping(value = "/delete", 
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.DELETE)
+	@Transactional
+	public ResponseEntity<?> delete(@RequestParam(value = "idUsuario", required = true) Long idUsuario) {
+		usuarioRepository.delete(idUsuario);
+		return ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(value = "/update", 
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.PUT)
+	public ResponseEntity<?> update(@RequestBody Usuario usuario) {
+		return ResponseEntity.ok(usuarioService.update(usuario));
 	}
 
 }

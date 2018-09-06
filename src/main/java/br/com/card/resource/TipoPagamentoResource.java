@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.card.dto.CreateTipoPagamentoDTO;
+import br.com.card.model.Cartao;
+import br.com.card.model.TipoPagamento;
 import br.com.card.repository.TipoPagamentoRepository;
 import br.com.card.service.TipoPagamentoService;
 
@@ -45,6 +47,22 @@ public class TipoPagamentoResource {
 			method = RequestMethod.POST)
 	public ResponseEntity<?> create(@RequestBody CreateTipoPagamentoDTO dto) {
 		return ResponseEntity.ok(tipoPagamentoService.create(dto));
+	}
+	
+	@RequestMapping(value = "/delete", 
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.DELETE)
+	@Transactional
+	public ResponseEntity<?> delete(@RequestParam(value = "idTipoPagamento", required = true) Long idTipoPagamento) {
+		tipoPagamentoRepository.delete(idTipoPagamento);
+		return ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(value = "/update", 
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			method = RequestMethod.PUT)
+	public ResponseEntity<?> update(@RequestBody TipoPagamento tipoPagamento) {
+		return ResponseEntity.ok(tipoPagamentoService.update(tipoPagamento));
 	}
 
 }
