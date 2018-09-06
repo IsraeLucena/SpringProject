@@ -10,59 +10,58 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.card.dto.CreateCartaoDTO;
-import br.com.card.dto.CreatePagamentoDTO;
-import br.com.card.model.Cartao;
-import br.com.card.repository.CartaoRepository;
-import br.com.card.service.CartaoService;
+import br.com.card.dto.CreateContaDTO;
+import br.com.card.model.Conta;
+import br.com.card.repository.ContaRepository;
+import br.com.card.service.ContaService;
 
 @RestController
-@RequestMapping(value = "/api/cartao")
-public class CartaoResource {
+@RequestMapping(value = "/api/conta")
+public class ContaResource {
 	
 	@Autowired
-	private CartaoRepository cartaoRepository;
+	private ContaRepository contaRepository;
 	
 	@Autowired
-	private CartaoService cartaoService;
+	private ContaService contaService;
 	
 	@RequestMapping(value = "/find-all", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.GET)
 	@Transactional
 	public ResponseEntity<?> listAll() {
-		return ResponseEntity.ok(cartaoRepository.findAll());
+		return ResponseEntity.ok(contaRepository.findAll());
 	}
 	
 	@RequestMapping(value = "/find-by-id", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.GET)
 	@Transactional
-	public ResponseEntity<?> listById(@RequestParam(value = "idCartao", required = true) Long idCartao) {
-		return ResponseEntity.ok(cartaoRepository.findOne(idCartao));
+	public ResponseEntity<?> listById(@RequestParam(value = "idConta", required = true) Long idConta) {
+		return ResponseEntity.ok(contaRepository.findOne(idConta));
 	}
 	
 	@RequestMapping(value = "/create", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
-	public ResponseEntity<?> create(@RequestBody CreateCartaoDTO dto) {
-		return ResponseEntity.ok(cartaoService.create(dto));
+	public ResponseEntity<?> create(@RequestBody CreateContaDTO dto) {
+		return ResponseEntity.ok(contaService.create(dto));
 	}
 	
 	@RequestMapping(value = "/delete", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.DELETE)
 	@Transactional
-	public ResponseEntity<?> delete(@RequestParam(value = "idCartao", required = true) Long idCartao) {
-		cartaoRepository.delete(idCartao);
+	public ResponseEntity<?> delete(@RequestParam(value = "idConta", required = true) Long idConta) {
+		contaRepository.delete(idConta);
 		return ResponseEntity.ok().build();
 	}
 	
 	@RequestMapping(value = "/update", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.PUT)
-	public ResponseEntity<?> update(@RequestBody Cartao cartao) {
-		return ResponseEntity.ok(cartaoService.update(cartao));
+	public ResponseEntity<?> update(@RequestBody Conta conta) {
+		return ResponseEntity.ok(contaService.update(conta));
 	}
 
 }

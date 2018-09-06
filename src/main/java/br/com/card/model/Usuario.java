@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.card.dto.CreateUsuarioDTO;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "usuario")
@@ -26,6 +28,16 @@ public class Usuario implements Serializable {
 	
 	@Column(name = "nascimento", nullable = false)
 	private Date nascimento;
+	
+	public Usuario() {
+		
+	}
+	
+	public Usuario(CreateUsuarioDTO dto) {
+		this.nome = dto.nome;
+		this.cpf = dto.cpf;
+		this.nascimento = dto.nascimento;
+	}
 
 	public Long getId() {
 		return id;

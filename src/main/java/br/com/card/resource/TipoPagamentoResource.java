@@ -10,43 +10,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.card.dto.CreateUsuarioDTO;
-import br.com.card.model.Usuario;
-import br.com.card.repository.UsuarioRepository;
-import br.com.card.service.UsuarioService;
+import br.com.card.dto.CreateTipoPagamentoDTO;
+import br.com.card.repository.TipoPagamentoRepository;
+import br.com.card.service.TipoPagamentoService;
 
 @RestController
-@RequestMapping(value = "/api/usuario")
-public class UsuarioResource {
+@RequestMapping(value = "/api/tipo-pagamento")
+public class TipoPagamentoResource {
 	
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private TipoPagamentoRepository tipoPagamentoRepository;
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private TipoPagamentoService tipoPagamentoService;
 	
 	@RequestMapping(value = "/find-all", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.GET)
 	@Transactional
 	public ResponseEntity<?> listAll() {
-		return ResponseEntity.ok(usuarioRepository.findAll());
+		return ResponseEntity.ok(tipoPagamentoRepository.findAll());
 	}
 	
 	@RequestMapping(value = "/find-by-id", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.GET)
 	@Transactional
-	public ResponseEntity<?> listById(@RequestParam(value = "idUsuario", required = true) Long idUsuario) {
-		Usuario usuario = usuarioRepository.findOne(idUsuario);
-		return ResponseEntity.ok(usuario);
+	public ResponseEntity<?> listById(@RequestParam(value = "idTipoPagamento", required = true) Long idTipoPagamento) {
+		return ResponseEntity.ok(tipoPagamentoRepository.findOne(idTipoPagamento));
 	}
 	
 	@RequestMapping(value = "/create", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
-	public ResponseEntity<?> create(@RequestBody CreateUsuarioDTO dto) {
-		return ResponseEntity.ok(usuarioService.create(dto));
+	public ResponseEntity<?> create(@RequestBody CreateTipoPagamentoDTO dto) {
+		return ResponseEntity.ok(tipoPagamentoService.create(dto));
 	}
 
 }

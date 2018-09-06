@@ -10,43 +10,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.card.dto.CreateUsuarioDTO;
-import br.com.card.model.Usuario;
-import br.com.card.repository.UsuarioRepository;
-import br.com.card.service.UsuarioService;
+import br.com.card.dto.CreateCategoriaDTO;
+import br.com.card.repository.CategoriaRepository;
+import br.com.card.service.CategoriaService;
 
 @RestController
-@RequestMapping(value = "/api/usuario")
-public class UsuarioResource {
+@RequestMapping(value = "/api/categoria")
+public class CategoriaResource {
 	
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private CategoriaRepository caegoriaRepository;
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private CategoriaService categoriaService;
 	
 	@RequestMapping(value = "/find-all", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.GET)
 	@Transactional
 	public ResponseEntity<?> listAll() {
-		return ResponseEntity.ok(usuarioRepository.findAll());
+		return ResponseEntity.ok(caegoriaRepository.findAll());
 	}
 	
 	@RequestMapping(value = "/find-by-id", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.GET)
 	@Transactional
-	public ResponseEntity<?> listById(@RequestParam(value = "idUsuario", required = true) Long idUsuario) {
-		Usuario usuario = usuarioRepository.findOne(idUsuario);
-		return ResponseEntity.ok(usuario);
+	public ResponseEntity<?> listById(@RequestParam(value = "idCategoria", required = true) Long idCategoria) {
+		return ResponseEntity.ok(caegoriaRepository.findOne(idCategoria));
 	}
 	
 	@RequestMapping(value = "/create", 
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
-	public ResponseEntity<?> create(@RequestBody CreateUsuarioDTO dto) {
-		return ResponseEntity.ok(usuarioService.create(dto));
+	public ResponseEntity<?> create(@RequestBody CreateCategoriaDTO dto) {
+		return ResponseEntity.ok(categoriaService.create(dto));
 	}
 
 }

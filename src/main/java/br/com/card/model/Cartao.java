@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.card.dto.CreateCartaoDTO;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "cartao")
@@ -28,6 +30,17 @@ public class Cartao implements Serializable {
 	
 	@Column(name = "limite", nullable = false)
 	private double limite;
+
+	public Cartao() {
+		
+	}
+	
+	public Cartao(CreateCartaoDTO dto) {
+		this.nome = dto.nome;
+		this.diaFechamento = dto.diaFechamento;
+		this.diaPagamento = dto.diaPagamento;
+		this.limite = dto.limite;
+	}
 
 	public Long getId() {
 		return id;
